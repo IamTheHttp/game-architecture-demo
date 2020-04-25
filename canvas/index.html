@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Architecture - Canvas</title>
+  <style>
+    /**
+     * Just some styles, nothing interesting
+     */
+    canvas {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+<!-- Our canvas Element-->
+<canvas width="500" height="500" id="myCanvas"></canvas>
+
+<script>
+  /**
+   * Setup and definitions
+   */
+  let canvas = document.getElementById('myCanvas');
+  let ctx = canvas.getContext('2d');
+
+  /**
+   * Draw a line on the canvas
+   */
+  function drawLine(x, y, color = 'black') {
+    ctx.beginPath(); // put the 'pen' down
+    ctx.moveTo(0, 0);
+    ctx.lineTo(x, y);
+    ctx.strokeStyle = color;
+    ctx.stroke();
+  }
+</script>
+
+<script>
+  /**
+   * Our requirement:
+   * Draw a static green line, and a random moving line every 16ms
+   */
+
+  // static, unchanged, constant line
+  drawLine(500, 500, 'green');
+
+  // also, draw a dynamic line every 16ms
+  // Bonus: In the real world we'll be using requestAnimationFrame instead of setInterval
+  setInterval(() => {
+    let x = Math.floor(Math.random() * 1000);
+    let y = Math.floor(Math.random() * 1000);
+    drawLine(x, y);
+
+    // #1 - What will we see on screen? (Why?)
+    // #2 - Is our green line still there?
+    // #3 - What would happen if we uncomment this code?
+    // x = 0;
+    // while (x < 10e8) {
+    //   x++;
+    // }
+
+  }, 16);
+</script>
+</body>
+</html>

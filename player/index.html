@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Architecture - Player</title>
+  <style>
+    /**
+     * Just some styles, nothing interesting
+     */
+    canvas {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+<!-- Our canvas Element-->
+<canvas width="500" height="500" id="myCanvas"></canvas>
+
+
+<script>
+  /**
+   * Setup and definitions
+   */
+  let canvas = document.getElementById('myCanvas');
+  let ctx = canvas.getContext('2d');
+
+  /**
+   * Draw a circle on the canvaS
+   */
+  function drawCircle(x, y, color = 'black') {
+    let radius = 50;
+    ctx.moveTo(x, y);
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = color;
+    ctx.stroke();
+  }
+</script>
+
+<script>
+  /**
+   * Class player
+   * moveTo(x,y)
+   * render() // renders to canvas
+   */
+  class Player {
+    constructor() {
+      this.position = {
+        x: 20,
+        y: 20
+      }
+    }
+
+    moveTo(x, y) {
+      this.position = {x, y}
+    }
+
+    render() { // this is a naive implementation, similar to 'component.render'
+      drawCircle(this.position.x, this.position.y);
+    }
+  }
+
+  /**
+   * Init the game object
+   */
+  let player = new Player();
+
+  /**
+   * Set up some listeners
+   */
+  canvas.addEventListener('mousemove', (event) => {
+    player.moveTo(event.x, event.y);
+  });
+
+  /**
+   * Game loop #1
+   * The player is responsible for rendering itself
+   * All game logic related to that is within the player
+   */
+  setInterval(() => {
+    ctx.clearRect(0, 0, 500, 500);
+    player.render();
+  }, 16);
+
+  /**
+   * Game loop #2
+   * Rendering is happening externally instead of internally
+   * The 'global' loop knows what to do for the player
+   */
+  setInterval(() => {
+    ctx.clearRect(0, 0, 500, 500);
+
+    let {x, y} = player.position;
+    drawCircle(x, y);
+  }, 16);
+</script>
+</body>
+</html>
