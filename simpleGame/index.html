@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Game Architecture - Simple game</title>
+  <style>
+    /**
+     * Just some styles, nothing interesting
+     */
+    canvas {
+      width: 500px;
+    }
+  </style>
+</head>
+<body>
+<!-- Our canvas Element-->
+<canvas width="500" height="500" id="myCanvas"></canvas>
+
+<script>
+  /**
+   * Setup and definitions
+   */
+  let canvas = document.getElementById('myCanvas');
+
+  let ctx = canvas.getContext('2d');
+
+  // used globally later.
+  function drawCircle(x, y, color = 'black') {
+    let radius = 15;
+    ctx.moveTo(x, y);
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
+    ctx.strokeStyle = color;
+    ctx.stroke();
+  }
+
+  window.ctx = ctx;
+  window.canvas = canvas;
+</script>
+
+
+<script src="./dist.js"></script>
+</body>
+
+</html>
